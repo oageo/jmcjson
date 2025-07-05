@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { readFile } from 'node:fs/promises';
+
+// 型定義
+interface JointData {
+    code: string;
+    name: string;
+}
+
+// publicディレクトリからJSONファイルを読み込む
+const jsonContent = await readFile('public/joint_all.json', 'utf-8');
+const allData: JointData[] = JSON.parse(jsonContent);
+---
+
+<Layout title="地方公共団体コード一覧">
+    <header class="hero">
+        <div class="hero-body">
+            <h1 class="title">地方公共団体コード一覧</h1>
+            <p class="subtitle"><a href="/joint_all.json">joint_all.json</a>より自動的に生成しています。</p>
+        </div>
+    </header>
+    <section class="container is-flex is-justify-content-center">
+        <table class="table is-striped m-2">
+            <thead>
+                <tr>
+                    <th>地方公共団体コード</th>
+                    <th>地方公共団体の名称</th>
+                </tr>
+            </thead>
+            <tbody>
+                {allData.map(item => (
+                    <tr>
+                        <td>{item.code}</td>
+                        <td>{item.name}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </section>
+</Layout>
