@@ -28,8 +28,8 @@ async function main() {
       .filter(row => row && row[0]) // 団体コードが存在する行のみを対象
       .map(row => Object.fromEntries(keys1.map((k, i) => [k, row[i]])));
   });
-  ensureDir('dist/pref_lce.json');
-  writeFileSync('dist/pref_lce.json', JSON.stringify(json1, null, 4), 'utf-8');
+  ensureDir('public/pref_lce.json');
+  writeFileSync('public/pref_lce.json', JSON.stringify(json1, null, 4), 'utf-8');
 
   // 2つ目: B列から始まるデータを処理
   const workbook2 = await downloadWorkbook(PUBLIC_SLCE_XLSX);
@@ -49,8 +49,8 @@ async function main() {
       }
       return [k, val];
     })));
-  ensureDir('dist/slce.json');
-  writeFileSync('dist/slce.json', JSON.stringify(json2, null, 4), 'utf-8');
+  ensureDir('public/slce.json');
+  writeFileSync('public/slce.json', JSON.stringify(json2, null, 4), 'utf-8');
 
   // 3つ目: 1と2を結合して joint_all.json を作成
   const joint1 = json1.map(item => ({
@@ -66,8 +66,8 @@ async function main() {
 
   const jointAll = [...joint1, ...joint2];
 
-  ensureDir('dist/joint_all.json');
-  writeFileSync('dist/joint_all.json', JSON.stringify(jointAll, null, 4), 'utf-8');
+  ensureDir('public/joint_all.json');
+  writeFileSync('public/joint_all.json', JSON.stringify(jointAll, null, 4), 'utf-8');
 }
 
 main().catch(e => {
