@@ -1,0 +1,16 @@
+---
+import Filescards from "./Filescards.astro";
+---
+
+<div class="container">
+    <section class="m-2">
+        <h2 class="title">jmcjsonとは</h2>
+        <p>jmcjsonは<a href="https://www.soumu.go.jp/denshijiti/code.html">総務省のWebサイト上で公開されている地方公共団体コードのデータ</a>を加工することによって、再加工等が行いやすいJSON形式で出力するサイトです。</p>
+    </section>
+    <section class="m-2">
+        <h2 class="title">ファイル</h2>
+        <p>jmcjsonでは以下のファイルを提供しています。ビルド時に一度だけ総務省のWebサイトから情報を取得しています。</p>
+        <hr>
+        <Filescards />
+    </section>
+</div>

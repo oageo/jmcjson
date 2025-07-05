@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jmc.osumiakari.jp/sitemap-index.xml
