@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:withjson": "pnpm generate:json && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "generate:json": "node scripts/index.js"
