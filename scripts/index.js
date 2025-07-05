@@ -20,7 +20,7 @@ async function main() {
   // 1つ目: 全てのシートを処理
   const workbook1 = await downloadWorkbook(PUBLIC_PREF_LCE_CODES_XLSX);
   const keys1 = ['団体コード', '都道府県名（漢字）', '市区町村名（漢字）', '都道府県名（カナ）', '市区町村名（カナ）'];
-  const json1 = workbook1.SheetNames.flatMap(sheetName => {
+  const json1_raw = workbook1.SheetNames.flatMap(sheetName => {
     const sheet = workbook1.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
     return data
@@ -28,6 +28,14 @@ async function main() {
       .filter(row => row && row[0]) // 団体コードが存在する行のみを対象
       .map(row => Object.fromEntries(keys1.map((k, i) => [k, row[i]])));
   });
+  // 団体コードに基づいて重複を排除
+  const uniqueMap1 = new Map();
+  json1_raw.forEach(item => {
+    if (!uniqueMap1.has(item['団体コード'])) {
+      uniqueMap1.set(item['団体コード'], item);
+    }
+  });
+  const json1 = Array.from(uniqueMap1.values());
   ensureDir('public/pref_lce.json');
   writeFileSync('public/pref_lce.json', JSON.stringify(json1, null, 4), 'utf-8');
 
